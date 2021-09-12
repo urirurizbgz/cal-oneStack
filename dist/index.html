@@ -107,6 +107,122 @@
 				</div>
 			</div>
 		</div>
-		<script></script>
+		<script>
+			let stackCol = [2, "+", 3];
+			try {
+				cal(stackCol);
+				stackCol = [2, "+", 3, "-", 1];
+				cal(stackCol);
+				stackCol = ["-", 3, "+", 1];
+				cal(stackCol);
+				stackCol = ["*", 3, "+", 1];
+				cal(stackCol);
+				stackCol = ["/", 3, "+", 1];
+				cal(stackCol);
+				stackCol = [6, "*", 3, "/", 2];
+				cal(stackCol);
+				stackCol = [6, "*", 3, "/", 2];
+				cal(stackCol);
+				stackCol = [
+					10,
+					"-",
+					2,
+					"+",
+					3,
+					"*",
+					9,
+					"/",
+					3,
+					"-",
+					3,
+					"/",
+					2,
+					"-",
+					10,
+					"*",
+					4,
+				];
+				cal(stackCol);
+			} catch (e) {
+				console.log(e);
+			}
+			function cal(numAndParams) {
+				let acc = 0;
+				let param = "+";
+
+				numAndParams.forEach((e) => {
+					console.log("stackCol : " + stackCol);
+
+					switch (e) {
+						case "+":
+						case "-":
+						case "*":
+						case "/":
+							param = e;
+							break;
+
+						default:
+							switch (param) {
+								case "+":
+									acc = acc + e;
+									break;
+								case "-":
+									acc = acc - e;
+									break;
+								case "*":
+									acc = acc * e;
+									break;
+								case "/":
+									if (e === 0) {
+										throw "Error: divided by zero";
+									}
+									acc = acc / e;
+									break;
+							}
+							break;
+					}
+				});
+
+				console.log("計算結果: " + acc);
+				return acc;
+				// let sort, divZ;
+
+				// while (stackCol.length != 0) {
+				// 	console.log("while");
+				// 	sort = stackCol.slice(0, 0);//
+				// 	console.log("sort : " + sort);
+				// 	if (sort == "+" || sort == "-" || sort == "*" || sort == "/") {
+				// 		console.log("if");
+				// 		param = stackCol.shift();
+				// 		console.log("param : " + param);
+				// 	} else {
+
+				// 		console.log("else");
+				// 		switch (param) {
+				// 			case "+":
+				// 				acc = acc + stackCol.shift();
+
+				// 				break;
+				// 			case "-":
+				// 				acc = acc + stackCol.shift();
+				// 				break;
+				// 			case "*":
+				// 				acc = acc + stackCol.shift();
+				// 				break;
+				// 			case "/":
+				// 				divZ = stackCol.shift();
+				// 				if (divZ != 0) {
+				// 					acc = acc + stackCol.shift();
+				// 				} else {
+				// 					console.log("error");
+				// 				}
+				// 				break;
+				// 		}
+				// 	}
+				// }
+				// console.log("stackCol : " + stackCol);
+				// console.log("ANS :  " + acc);
+			}
+		</script>
 	</body>
 </html>
