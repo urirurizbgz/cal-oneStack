@@ -43,7 +43,7 @@
 						<p>9</p>
 					</div>
 					<div
-						onclick="pushButton(14)"
+						onclick="pushButton('/')"
 						id="division"
 						class="btn justify-center"
 					>
@@ -62,7 +62,7 @@
 						<p>6</p>
 					</div>
 					<div
-						onclick="pushButton(13)"
+						onclick="pushButton('*')"
 						id="multiplication"
 						class="btn justify-center"
 					>
@@ -82,7 +82,7 @@
 						<p>3</p>
 					</div>
 					<div
-						onclick="pushButton(12)"
+						onclick="pushButton('-')"
 						id="subtraction"
 						class="btn justify-center"
 					>
@@ -94,11 +94,11 @@
 					<div onclick="pushButton(0)" id="num0" class="btn justify-center">
 						<p>0</p>
 					</div>
-					<div onclick="pushButton(15)" id="equal" class="btn justify-center">
+					<div onclick="pushButton('=')" id="equal" class="btn justify-center">
 						<p>=</p>
 					</div>
 					<div
-						onclick="pushButton(11)"
+						onclick="pushButton('+')"
 						id="addition"
 						class="btn justify-center"
 					>
@@ -108,51 +108,21 @@
 			</div>
 		</div>
 		<script>
-			let stackCol = [2, "+", 3];
-			try {
-				cal(stackCol);
-				stackCol = [2, "+", 3, "-", 1];
-				cal(stackCol);
-				stackCol = ["-", 3, "+", 1];
-				cal(stackCol);
-				stackCol = ["*", 3, "+", 1];
-				cal(stackCol);
-				stackCol = ["/", 3, "+", 1];
-				cal(stackCol);
-				stackCol = [6, "*", 3, "/", 2];
-				cal(stackCol);
-				stackCol = [6, "*", 3, "/", 2];
-				cal(stackCol);
-				stackCol = [
-					10,
-					"-",
-					2,
-					"+",
-					3,
-					"*",
-					9,
-					"/",
-					3,
-					"-",
-					3,
-					"/",
-					2,
-					"-",
-					10,
-					"*",
-					4,
-				];
-				cal(stackCol);
-			} catch (e) {
-				console.log(e);
-			}
+			var stackCol = [];
+			let status;
+			let number = 0;
+			let arit;
+			var displayElm = document.getElementById("display");
+
+			// try {
+			// } catch (e) {
+			// 	console.log(e);
+			// }
 			function cal(numAndParams) {
 				let acc = 0;
 				let param = "+";
 
 				numAndParams.forEach((e) => {
-					console.log("stackCol : " + stackCol);
-
 					switch (e) {
 						case "+":
 						case "-":
@@ -222,6 +192,91 @@
 				// }
 				// console.log("stackCol : " + stackCol);
 				// console.log("ANS :  " + acc);
+			}
+			function display(num) {
+				//画面表示
+				displayElm.textContent = num;
+			}
+			function provisional(proCol, number, arit) {
+				proCol.push(number, arit);
+				return cal(proCol);
+			}
+
+			function pushButton(inButton) {
+				console.log("inButton : " + inButton + "   ===============");
+				switch (inButton) {
+					case "+":
+					case "-":
+					case "*":
+					case "/":
+						console.log("here is status 2  --------------------");
+						//if (status == 1 || status == 2) {
+						//	display(provisional(stackCol, number, arit));
+						//}
+						arit = inButton;
+						display(0);
+						console.log("arit:" + arit);
+						console.log("status:" + status);
+						status = 2;
+						console.log("stackCol:" + stackCol);
+						break;
+					case "=":
+						console.log("here is status 3  --------------------");
+						stackCol.push(number);
+						console.log("number :" + number);
+						number = 0;
+						console.log("stackCol : " + stackCol);
+
+						if (status == 3) {
+							stackCol.push(arit);
+						}
+
+						display(cal(stackCol));
+						console.log("status:" + status);
+						status = 3;
+
+						break;
+
+					// case 0:
+					// case 1:
+					// case 2:
+					// case 3:
+					// case 4:
+					// case 5:
+					// case 6:
+					// case 7:
+					// case 8:
+					// case 9:
+					default:
+						switch (status) {
+							case 2:
+								console.log("here is status 1 case2 --------------------");
+								console.log("def case2");
+
+								stackCol.push(number, arit);
+								number = inButton;
+								display(number);
+								console.log("stackCol:" + stackCol);
+								break;
+							case 3:
+								console.log("here is status 1 case3 --------------------");
+								stackCol = [];
+								number = inButton;
+								console.log("number :" + number);
+								console.log("stackCol:" + stackCol);
+								break;
+							default:
+								console.log("here is status 1 def --------------------");
+
+								number = number * 10 + inButton;
+								display(number);
+								console.log("stackCol:" + stackCol);
+								break;
+						}
+						console.log("status:" + status);
+						status = 1;
+						break;
+				}
 			}
 		</script>
 	</body>
