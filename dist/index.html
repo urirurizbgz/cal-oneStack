@@ -113,6 +113,7 @@
 			let number = 0;
 			let arit;
 			var displayElm = document.getElementById("display");
+			display(0);
 
 			// try {
 			// } catch (e) {
@@ -195,11 +196,19 @@
 			}
 			function display(num) {
 				//画面表示
+				console.log("here is display --------------------");
 				displayElm.textContent = num;
 			}
+
 			function provisional(proCol, number, arit) {
+				console.log("here is provisional  --------------------");
+				console.log("proCol:" + proCol);
 				proCol.push(number, arit);
-				return cal(proCol);
+				let len = proCol.length;
+				if (len > 2) {
+					console.log("proCol:" + proCol);
+					display(cal(proCol));
+				}
 			}
 
 			function pushButton(inButton) {
@@ -210,11 +219,10 @@
 					case "*":
 					case "/":
 						console.log("here is status 2  --------------------");
-						//if (status == 1 || status == 2) {
-						//	display(provisional(stackCol, number, arit));
-						//}
+						if (status == 1 || status == 2) {
+							provisional(stackCol.concat(), number, arit);
+						}
 						arit = inButton;
-						display(0);
 						console.log("arit:" + arit);
 						console.log("status:" + status);
 						status = 2;
