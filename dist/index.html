@@ -94,7 +94,7 @@
 		<script>
 			var stackCol = [];
 			let number = 0;
-			let arit;
+			let arit = "+";
 			let status;
 			var displayElm = document.getElementById("display");
 			display(0);
@@ -211,8 +211,27 @@
 				console.log("arit:" + arit);
 				console.log("status:" + status);
 			}
-			// 0で除算した時の処理
+
+			function c() {
+				//cボタンが押された時の処理
+				switch (status) {
+					case 1: // statusが1、2の時 ->現在の数*10＋入力された数 の現在の数を0にする。statusは1にする。
+					case 2:
+						number = 0;
+						display(number);
+						status = 1;
+						break;
+
+					default:
+						// statusが3、errorの時 ->ac関数を呼び出す。statusは0にする。
+						ac();
+						status = 0;
+						break;
+				}
+			}
+
 			function dividedByZero() {
+				// 0で除算した時の処理
 				console.log(
 					"dividedByZero   ==================================================="
 				);
@@ -268,14 +287,13 @@
 						break;
 					case "=":
 						console.log("here is status 3  --------------------");
-						stackCol.push(number);
-						console.log("number :" + number);
-						number = 0;
-						logStack();
-
 						if (status == 3) {
 							stackCol.push(arit);
 						}
+						stackCol.push(number);
+						console.log("number :" + number);
+						// number = 0;
+						logStack();
 
 						try {
 							display(cal(stackCol));
