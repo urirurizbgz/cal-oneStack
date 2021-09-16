@@ -228,7 +228,7 @@
 				//[+-*/]ボタンを非活性化
 				// document.getElementById("button").disabled = false;
 				// console.log("[+-*/]ボタンを非活性化");
-				status = 3;
+				status = 4;
 			}
 
 			function pushButton(inButton) {
@@ -256,7 +256,13 @@
 								status = 2;
 								logStack();
 								break;
-							default:
+							case 3:
+								arit = inButton;
+								console.log("arit:" + arit);
+								console.log("status:" + status);
+								status = 2;
+								break;
+							case 4:
 								break;
 						}
 						break;
