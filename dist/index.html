@@ -24,84 +24,68 @@
 				</div>
 				<!-- AC C -->
 				<div class="flex">
-					<div onclick="pushButton(ac)" id="ac" class="btn justify-center">
+					<div onclick="ac()" id="ac" class="btn justify-center">
 						<p>AC</p>
 					</div>
-					<div onclick="pushButton(c)" id="c" class="btn justify-center">
+					<div onclick="c()" id="c" class="btn justify-center">
 						<p>C</p>
 					</div>
 				</div>
 				<!-- 7 8 9 ÷ -->
 				<div class="flex">
-					<div onclick="pushButton(7)" id="num7" class="btn justify-center">
+					<div onclick="pushButton(7)" id="button" class="btn justify-center">
 						<p>7</p>
 					</div>
-					<div onclick="pushButton(8)" id="num8" class="btn justify-center">
+					<div onclick="pushButton(8)" id="button" class="btn justify-center">
 						<p>8</p>
 					</div>
-					<div onclick="pushButton(9)" id="num9" class="btn justify-center">
+					<div onclick="pushButton(9)" id="button" class="btn justify-center">
 						<p>9</p>
 					</div>
-					<div
-						onclick="pushButton('/')"
-						id="division"
-						class="btn justify-center"
-					>
+					<div onclick="pushButton('/')" id="button" class="btn justify-center">
 						<p>÷</p>
 					</div>
 				</div>
 				<!-- 4 5 6 × -->
 				<div class="flex">
-					<div onclick="pushButton(4)" id="num4" class="btn justify-center">
+					<div onclick="pushButton(4)" id="button" class="btn justify-center">
 						<p>4</p>
 					</div>
-					<div onclick="pushButton(5)" id="num5" class="btn justify-center">
+					<div onclick="pushButton(5)" id="button" class="btn justify-center">
 						<p>5</p>
 					</div>
-					<div onclick="pushButton(6)" id="num6" class="btn justify-center">
+					<div onclick="pushButton(6)" id="button" class="btn justify-center">
 						<p>6</p>
 					</div>
-					<div
-						onclick="pushButton('*')"
-						id="multiplication"
-						class="btn justify-center"
-					>
+					<div onclick="pushButton('*')" id="button" class="btn justify-center">
 						<p>×</p>
 					</div>
 				</div>
 				<!-- 1 2 3 - -->
 				<div class="flex">
-					<div onclick="pushButton(1)" id="num1" class="btn justify-center">
+					<div onclick="pushButton(1)" id="button" class="btn justify-center">
 						<p>1</p>
 					</div>
 
-					<div onclick="pushButton(2)" id="num2" class="btn justify-center">
+					<div onclick="pushButton(2)" id="button" class="btn justify-center">
 						<p>2</p>
 					</div>
-					<div onclick="pushButton(3)" id="num3" class="btn justify-center">
+					<div onclick="pushButton(3)" id="button" class="btn justify-center">
 						<p>3</p>
 					</div>
-					<div
-						onclick="pushButton('-')"
-						id="subtraction"
-						class="btn justify-center"
-					>
+					<div onclick="pushButton('-')" id="button" class="btn justify-center">
 						<p>-</p>
 					</div>
 				</div>
 				<!-- 0 = - -->
 				<div class="flex">
-					<div onclick="pushButton(0)" id="num0" class="btn justify-center">
+					<div onclick="pushButton(0)" id="button" class="btn justify-center">
 						<p>0</p>
 					</div>
-					<div onclick="pushButton('=')" id="equal" class="btn justify-center">
+					<div onclick="pushButton('=')" id="button" class="btn justify-center">
 						<p>=</p>
 					</div>
-					<div
-						onclick="pushButton('+')"
-						id="addition"
-						class="btn justify-center"
-					>
+					<div onclick="pushButton('+')" id="button" class="btn justify-center">
 						<p>+</p>
 					</div>
 				</div>
@@ -109,9 +93,9 @@
 		</div>
 		<script>
 			var stackCol = [];
-			let status;
 			let number = 0;
 			let arit;
+			let status;
 			var displayElm = document.getElementById("display");
 			display(0);
 
@@ -120,6 +104,9 @@
 			// 	console.log(e);
 			// }
 			function cal(numAndParams) {
+				console.log(
+					"call cal ---------------=============================>>>>>>>>>>>>>>>>>>>>>>"
+				);
 				let acc = 0;
 				let param = "+";
 
@@ -210,39 +197,93 @@
 					display(cal(proCol));
 				}
 			}
+			function ac() {
+				console.log("function ac   ===============//////////////////////");
+				//stackを0に
+				stackCol = [];
+				//arit,number,status,を0に
+				arit = number = status = 0;
+				//表示
+				display(number);
+				//
+				console.log("stackCol:" + stackCol);
+				console.log("number:" + number);
+				console.log("arit:" + arit);
+				console.log("status:" + status);
+			}
+			// 0で除算した時の処理
+			function dividedByZero() {
+				console.log(
+					"dividedByZero   ==================================================="
+				);
+				//エラーの文面を表示。
+				display("error");
+
+				// //[=]ボタンを非活性化
+				// document.getElementById("button").disabled = false;
+				// console.log("[=]ボタンを非活性化");
+				// //[数字]ボタンを非活性化
+				// document.getElementById("button").disabled = false;
+				// console.log("[数字]ボタンを非活性化");
+				//[+-*/]ボタンを非活性化
+				// document.getElementById("button").disabled = false;
+				// console.log("[+-*/]ボタンを非活性化");
+				status = 3;
+			}
 
 			function pushButton(inButton) {
 				console.log("inButton : " + inButton + "   ===============");
+				//エラーのあれこれ
+
 				switch (inButton) {
 					case "+":
 					case "-":
 					case "*":
 					case "/":
 						console.log("here is status 2  --------------------");
-						if (status == 1 || status == 2) {
-							provisional(stackCol.concat(), number, arit);
+						switch (status) {
+							case 1:
+							case 2:
+								try {
+									provisional(stackCol.concat(), number, arit);
+								} catch (e) {
+									// 0で除算した時の処理
+									dividedByZero();
+								}
+								arit = inButton;
+								console.log("arit:" + arit);
+								console.log("status:" + status);
+								status = 2;
+								logStack();
+								break;
+							default:
+								break;
 						}
-						arit = inButton;
-						console.log("arit:" + arit);
-						console.log("status:" + status);
-						status = 2;
-						console.log("stackCol:" + stackCol);
 						break;
 					case "=":
 						console.log("here is status 3  --------------------");
 						stackCol.push(number);
 						console.log("number :" + number);
 						number = 0;
-						console.log("stackCol : " + stackCol);
+						logStack();
 
 						if (status == 3) {
 							stackCol.push(arit);
 						}
 
-						display(cal(stackCol));
+						try {
+							display(cal(stackCol));
+						} catch (e) {
+							// 0で除算した時の処理
+							dividedByZero();
+						}
 						console.log("status:" + status);
 						status = 3;
-
+						console.log(
+							"stackCol:" +
+								stackCol +
+								"   ===================================================="
+						);
 						break;
 
 					// case 0:
@@ -264,27 +305,33 @@
 								stackCol.push(number, arit);
 								number = inButton;
 								display(number);
-								console.log("stackCol:" + stackCol);
+								logStack();
 								break;
 							case 3:
 								console.log("here is status 1 case3 --------------------");
-								stackCol = [];
+								// stackCol = [];
+								ac();
 								number = inButton;
+								display(number);
 								console.log("number :" + number);
-								console.log("stackCol:" + stackCol);
+								logStack();
 								break;
 							default:
 								console.log("here is status 1 def --------------------");
 
 								number = number * 10 + inButton;
 								display(number);
-								console.log("stackCol:" + stackCol);
+								logStack();
 								break;
 						}
 						console.log("status:" + status);
 						status = 1;
 						break;
 				}
+			}
+
+			function logStack() {
+				console.log("stackCol:" + stackCol);
 			}
 		</script>
 	</body>
