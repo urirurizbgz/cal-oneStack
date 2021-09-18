@@ -92,6 +92,12 @@
 			</div>
 		</div>
 		<script>
+			/*
+			やること：
+			詳細：
+			引数：
+			返り値：
+			*/
 			var stackCol = [];
 			let number = 0;
 			let arit = "+";
@@ -103,6 +109,11 @@
 			// } catch (e) {
 			// 	console.log(e);
 			// }
+
+			// 合計値を計算する
+			// 数値と四則計算で使われる記号が交互に入った配列を受け取り、計算結果を返す
+			// 引数 numAndParams[Number | String]
+			// 返り値 Number
 			function cal(numAndParams) {
 				console.log(
 					"call cal ---------------=============================>>>>>>>>>>>>>>>>>>>>>>"
@@ -181,12 +192,27 @@
 				// console.log("stackCol : " + stackCol);
 				// console.log("ANS :  " + acc);
 			}
+
+			/*
+			やること：画面に文字、数字を表示する
+			詳細：渡された引数の内容を、変数で指定された位置に表示する。
+			引数：num : Number か String
+			返り値：なし
+			*/
 			function display(num) {
 				//画面表示
 				console.log("here is display --------------------");
 				displayElm.textContent = num;
 			}
 
+			/*
+			やること：渡された引数を加工し、関数calに渡す。
+			詳細：数値と四則計算で使われる記号が交互に入った配列を受け取り、それに記号と数値をプッシュし、その上で配列の中身が2個より多いなら配列を関数calに渡す。
+			引数：proCol：配列、[Number | String]
+				 number：変数、Number
+				 arit：変数、String
+			返り値：なし
+			*/
 			function provisional(proCol, number, arit) {
 				console.log("here is provisional  --------------------");
 				console.log("proCol:" + proCol);
@@ -197,6 +223,13 @@
 					display(cal(proCol));
 				}
 			}
+
+			/*
+			やること：変数や配列を空にする（初期化する？）
+			詳細：配列stackColを空に、変数arit number statusを0にする。
+			引数：なし
+			返り値：なし
+			*/
 			function ac() {
 				console.log("function ac   ===============//////////////////////");
 				//stackを0に
@@ -212,6 +245,13 @@
 				console.log("status:" + status);
 			}
 
+			/*
+			やること：現在ディスプレイに表示されている数を0にして、再入力できるようにする
+			詳細：statusが1、2の時 -> 変数numberを0にし、表示する。statusを1にする。
+				 statusがそれ以外の時 -> 関数acを呼び出し、statusを0にする。
+			引数：なし
+			返り値：なし
+			*/
 			function c() {
 				//cボタンが押された時の処理
 				switch (status) {
@@ -230,6 +270,12 @@
 				}
 			}
 
+			/*
+			やること：ディスプレイにerrorと表示させ、状態をエラー状態（特定のボタン入力でしか画面が変わらない状態）にする。
+			詳細：関数displayに"error"を渡す。statusを4にする。
+			引数：なし
+			返り値：なし
+			*/
 			function dividedByZero() {
 				// 0で除算した時の処理
 				console.log(
@@ -250,6 +296,14 @@
 				status = 4;
 			}
 
+			/*
+			やること：1、入力されてきたものを正しく配列に収めて他関数に渡す。
+					2、他関数からのエラーを受け取って、エラー状態へ遷移させる関数へ渡す。
+			詳細：1、inButtonの中身を、配列stackColに、数字と四則計算記号（文字列）が交互になるように配列にプッシュして、配列を関数provisionalか、関数colに渡す。
+				 2、provisionalか、関数colからエラーを受け取り、dividedByZeroを呼ぶ。
+			引数：inButton：変数、Number か String
+			返り値：なし
+			*/
 			function pushButton(inButton) {
 				console.log("inButton : " + inButton + "   ===============");
 				//エラーのあれこれ
