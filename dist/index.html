@@ -33,59 +33,75 @@
 				</div>
 				<!-- 7 8 9 ÷ -->
 				<div class="flex">
-					<div onclick="pushButton(7)" id="button" class="btn justify-center">
+					<div onclick="pushValue(7)" id="button" class="btn justify-center">
 						<p>7</p>
 					</div>
-					<div onclick="pushButton(8)" id="button" class="btn justify-center">
+					<div onclick="pushValue(8)" id="button" class="btn justify-center">
 						<p>8</p>
 					</div>
-					<div onclick="pushButton(9)" id="button" class="btn justify-center">
+					<div onclick="pushValue(9)" id="button" class="btn justify-center">
 						<p>9</p>
 					</div>
-					<div onclick="pushButton('/')" id="button" class="btn justify-center">
+					<div
+						onclick="pushArithmetic('/')"
+						id="button"
+						class="btn justify-center"
+					>
 						<p>÷</p>
 					</div>
 				</div>
 				<!-- 4 5 6 × -->
 				<div class="flex">
-					<div onclick="pushButton(4)" id="button" class="btn justify-center">
+					<div onclick="pushValue(4)" id="button" class="btn justify-center">
 						<p>4</p>
 					</div>
-					<div onclick="pushButton(5)" id="button" class="btn justify-center">
+					<div onclick="pushValue(5)" id="button" class="btn justify-center">
 						<p>5</p>
 					</div>
-					<div onclick="pushButton(6)" id="button" class="btn justify-center">
+					<div onclick="pushValue(6)" id="button" class="btn justify-center">
 						<p>6</p>
 					</div>
-					<div onclick="pushButton('*')" id="button" class="btn justify-center">
+					<div
+						onclick="pushArithmetic('*')"
+						id="button"
+						class="btn justify-center"
+					>
 						<p>×</p>
 					</div>
 				</div>
 				<!-- 1 2 3 - -->
 				<div class="flex">
-					<div onclick="pushButton(1)" id="button" class="btn justify-center">
+					<div onclick="pushValue(1)" id="button" class="btn justify-center">
 						<p>1</p>
 					</div>
 
-					<div onclick="pushButton(2)" id="button" class="btn justify-center">
+					<div onclick="pushValue(2)" id="button" class="btn justify-center">
 						<p>2</p>
 					</div>
-					<div onclick="pushButton(3)" id="button" class="btn justify-center">
+					<div onclick="pushValue(3)" id="button" class="btn justify-center">
 						<p>3</p>
 					</div>
-					<div onclick="pushButton('-')" id="button" class="btn justify-center">
+					<div
+						onclick="pushArithmetic('-')"
+						id="button"
+						class="btn justify-center"
+					>
 						<p>-</p>
 					</div>
 				</div>
 				<!-- 0 = - -->
 				<div class="flex">
-					<div onclick="pushButton(0)" id="button" class="btn justify-center">
+					<div onclick="pushValue(0)" id="button" class="btn justify-center">
 						<p>0</p>
 					</div>
-					<div onclick="pushButton('=')" id="button" class="btn justify-center">
+					<div onclick="pushEqual()" id="button" class="btn justify-center">
 						<p>=</p>
 					</div>
-					<div onclick="pushButton('+')" id="button" class="btn justify-center">
+					<div
+						onclick="pushArithmetic('+')"
+						id="button"
+						class="btn justify-center"
+					>
 						<p>+</p>
 					</div>
 				</div>
@@ -277,7 +293,7 @@
 			}
 
 			/*
-			やること：ディスプレイにerrorと表示させ、状態をエラー状態（特定のボタン入力でしか画面が変わらない状態）にする。
+			やること：ディスプレイにerrorと表示させ、状態をエラー状態（特定のボタン入力でしか画面が変わらない状態）にする。そして状態を変える。
 			詳細：関数displayに"error"を渡す。statusを4にする。
 			引数：なし
 			返り値：なし
@@ -304,124 +320,102 @@
 			}
 
 			/*
-			やること：1、入力されてきたものを正しく配列に収めて他関数に渡す。
-					2、他関数からのエラーを受け取って、エラー状態へ遷移させる関数へ渡す。
-			詳細：1、inButtonの中身を、配列stackColに、数字と四則計算記号（文字列）が交互になるように配列にプッシュして、配列を関数provisionalか、関数colに渡す。
-				 2、provisionalか、関数colからエラーを受け取り、dividedByZeroを呼ぶ。
-			引数：inButton：変数、Number か String
-			返り値：なし。
+			やること：渡された引数を一時的に保管し、仮計算を行い、関数calがエラーを投げたらdividedByZero関数を呼ぶ。そして状態を変える。
+			詳細：
+				statusが1、2の時 -> provisional関数にstackColの複製とnumber,arit,を渡す。もし関数calがエラーを投げたら、dividedByZero関数を呼び終了。aritにinButtonを、statusに2を代入。終了。
+				statusが3の時 -> aritにinButtonを、statusに2を代入。終了。（status1、2と統合可能？）
+				statusが4の時 ->何もしない（statusが4ではなく、デフォルトにすべきか？）
+			引数：inButton: String
+			返り値：なし
 			*/
-			function pushButton(inButton) {
-				console.log("inButton : " + inButton + "   ===============");
-				//エラーのあれこれ
-
-				switch (inButton) {
-					case "+":
-					case "-":
-					case "*":
-					case "/":
-						console.log("here is status 2  --------------------");
-						switch (status) {
-							case 1:
-							case 2:
-								console.log("status 2 case 1,2");
-								try {
-									provisional(stackCol.concat(), number, arit);
-								} catch (e) {
-									// 0で除算した時の処理
-									dividedByZero();
-								}
-								arit = inButton;
-
-								status = 2;
-								logFour();
-								break;
-							case 3:
-								console.log("status 2 case 3");
-								arit = inButton;
-								logFour();
-								status = 2;
-								break;
-							case 4:
-								console.log("status 2 case 4");
-								break;
-						}
-						break;
-					case "=":
-						console.log("here is status 3  --------------------");
-						if (status == 3) {
-							stackCol.push(arit);
-						}
-						stackCol.push(number);
-						logFour();
-						// number = 0;
-						logFour();
-
+			function pushArithmetic(inButton) {
+				console.log("here is status 2  --------------------");
+				switch (status) {
+					case 1:
+					case 2:
+						console.log("status 2 case 1,2");
 						try {
-							display(cal(stackCol));
+							provisional(stackCol.concat(), number, arit);
 						} catch (e) {
 							// 0で除算した時の処理
 							dividedByZero();
 						}
-
-						status = 3;
-
+						arit = inButton;
+						status = 2;
 						logFour();
 						break;
-
-					// case 0:
-					// case 1:
-					// case 2:
-					// case 3:
-					// case 4:
-					// case 5:
-					// case 6:
-					// case 7:
-					// case 8:
-					// case 9:
-					default:
-						switch (status) {
-							case 2:
-								console.log("here is status 1 case2 --------------------");
-
-								stackCol.push(number, arit);
-								number = inButton;
-								display(number);
-								// logFour();
-								break;
-							case 3:
-								console.log("here is status 1 case3 --------------------");
-
-								// stackCol = [];
-								ac();
-								number = inButton;
-								display(number);
-								console.log("number :" + number);
-								// logFour();
-								break;
-							default:
-								console.log("here is status 1 def --------------------");
-
-								number = number * 10 + inButton;
-								display(number);
-								// logFour();
-								break;
-						}
-
-						status = 1;
+					case 3:
+						console.log("status 2 case 3");
+						arit = inButton;
+						status = 2;
 						logFour();
+						break;
+					case 4:
+						console.log("status 2 case 4");
 						break;
 				}
 			}
+			/*
+			やること：配列と変数を加工し、関数calに渡す、関数calがエラーを投げたらdividedByZero関数を呼ぶ。そして状態を変える。
+			詳細：statusが3の時stackColにaritとnumberをプッシュする、それ以外の時numberのみをプッシュする。
+			そしてcal関数にstackCol渡し、その結果をdisplay関数に渡す。関数calがエラーを投げたらdividedByZero関数を呼び、終了。
+			そしてstatusに3を代入し、終了。
+			引数：なし
+			返り値：なし
+			*/
+			function pushEqual() {
+				console.log("here is status 3  --------------------");
+				if (status == 3) {
+					stackCol.push(arit);
+				}
+				stackCol.push(number);
+				logFour();
+				// number = 0;
+				try {
+					display(cal(stackCol));
+				} catch (e) {
+					// 0で除算した時の処理
+					dividedByZero();
+				}
+				status = 3;
 
-			function logFour() {
-				console.log("stackCol:" + stackCol);
-				console.log("number:" + number);
-				console.log("arit:" + arit);
-				console.log("status:" + status);
-				console.log(
-					"--------------------------------------------" + "\n" + "\n"
-				);
+				logFour();
+			}
+
+			/*
+			やること：渡された引数を加工し、正しいタイミングで記号とともに配列にプッシュする。
+			詳細：
+				statusが2の時 -> numberとarit関数をpush。numberにinButtonを代入した上でnumberをdisplay関数に渡す。statusに1を代入。
+				statusが3の時 ->ac関数呼び出し。numberにinButtonを代入（status=2の時と統合可能？）statusに1を代入。
+				statusがそれ以外の時 ->numberにnumber*10+inButtonを代入した上でnumberをdisplay関数に渡す。statusに1を代入。
+			引数：inButton:Number
+			返り値：なし
+			*/
+			function pushValue(inButton) {
+				switch (status) {
+					case 2:
+						console.log("here is status 1 case2 --------------------");
+						stackCol.push(number, arit);
+						number = inButton;
+						display(number);
+						break;
+					case 3:
+						console.log("here is status 1 case3 --------------------");
+
+						ac();
+						number = inButton;
+						display(number);
+						break;
+					default:
+						console.log("here is status 1 def --------------------");
+
+						number = number * 10 + inButton;
+						display(number);
+						break;
+				}
+
+				status = 1;
+				logFour();
 			}
 
 			function test() {
@@ -505,8 +499,24 @@
 				dividedByZeroTest(5);
 				// 境界試験
 
-				// pushButton()のテスト
+				//pushArithmetic()のテスト
 				// 正常試験
+				// 異常試験
+				// 境界試験
+				//pushEqual()のテスト
+				// 正常試験
+				// 異常試験
+
+				// 境界試験
+				//pushValue()のテスト //pushValueTest(stackCol,statusNum,numberNum,aritStr,inButton)
+				// 正常試験
+
+				pushValueTest([123, "/"], 2, 5, "-", 9); //式が続く status=1,スタックにプッシュされる
+				pushValueTest([123, "/"], 3, 5, "-", 9); //別計算へ status=1,スタックが空になる,aritが0になる。numberは9になる
+				pushValueTest([123, "/"], 0, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
+				pushValueTest([123, "/"], 1, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
+				pushValueTest([123, "/"], 4, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
+				pushValueTest([123, "/"], 5, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
 				// 異常試験
 				// 境界試験
 			}
@@ -571,6 +581,7 @@
 				ac();
 				logFour();
 			}
+
 			function cTest(num) {
 				console.log("====================================  cTest");
 				stackCol = [123, "/", 7];
@@ -583,6 +594,7 @@
 			}
 
 			function dividedByZeroTest(previousStatus) {
+				console.log("====================================  dividedByZeroTest");
 				status = previousStatus;
 				console.log("previousStatus:  " + previousStatus);
 				let num = dividedByZero();
@@ -593,6 +605,27 @@
 				} else {
 					failed("dividedByZero: status:" + num);
 				}
+			}
+
+			function pushValueTest(stack, statusNum, numberNum, aritStr, inButton) {
+				console.log("====================================  pushValueTest");
+				//要改善
+				status = statusNum;
+				arit = aritStr;
+				number = numberNum;
+				stackCol = stack;
+				console.log("status :" + status);
+				logFour();
+				pushValue(inButton);
+			}
+			function logFour() {
+				console.log("stackCol:" + stackCol);
+				console.log("number:" + number);
+				console.log("arit:" + arit);
+				console.log("status:" + status);
+				console.log(
+					"--------------------------------------------" + "\n" + "\n"
+				);
 			}
 		</script>
 	</body>
