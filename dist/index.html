@@ -104,6 +104,14 @@
 			let status;
 			var displayElm = document.getElementById("display");
 			display(0);
+			logFour();
+
+			// テストを行うかどうかのフラグ
+			const testing = true;
+
+			if (testing) {
+				test();
+			}
 
 			// try {
 			// } catch (e) {
@@ -201,7 +209,7 @@
 			*/
 			function display(num) {
 				//画面表示
-				console.log("here is display --------------------");
+				console.log("display --------------------");
 				displayElm.textContent = num;
 			}
 
@@ -214,13 +222,14 @@
 			返り値：なし
 			*/
 			function provisional(proCol, number, arit) {
-				console.log("here is provisional  --------------------");
+				console.log("provisional  --------------------");
 				console.log("proCol:" + proCol);
 				proCol.push(number, arit);
 				let len = proCol.length;
 				if (len > 2) {
 					console.log("proCol:" + proCol);
 					display(cal(proCol));
+					return cal(proCol); //テスト用に追加
 				}
 			}
 
@@ -238,8 +247,7 @@
 				arit = number = status = 0;
 				//表示
 				display(number);
-				//
-				logFour();
+				//logFour();
 			}
 
 			/*
@@ -250,6 +258,7 @@
 			返り値：なし
 			*/
 			function c() {
+				console.log("function c   ===============//////////////////////");
 				//cボタンが押された時の処理
 				switch (status) {
 					case 1: // statusが1、2の時 ->現在の数*10＋入力された数 の現在の数を0にする。statusは1にする。
@@ -260,9 +269,9 @@
 						break;
 
 					default:
-						// statusが3、errorの時 ->ac関数を呼び出す。statusは0にする。
+						// statusが3、4（error）、0、その他、の時 ->ac関数を呼び出す。statusは0にする。
 						ac();
-						status = 0;
+						//status = 0; //要らなくね？
 						break;
 				}
 			}
@@ -291,6 +300,7 @@
 				// document.getElementById("button").disabled = false;
 				// console.log("[+-*/]ボタンを非活性化");
 				status = 4;
+				return status;
 			}
 
 			/*
@@ -314,6 +324,7 @@
 						switch (status) {
 							case 1:
 							case 2:
+								console.log("status 2 case 1,2");
 								try {
 									provisional(stackCol.concat(), number, arit);
 								} catch (e) {
@@ -321,16 +332,18 @@
 									dividedByZero();
 								}
 								arit = inButton;
-								logFour();
+
 								status = 2;
 								logFour();
 								break;
 							case 3:
+								console.log("status 2 case 3");
 								arit = inButton;
 								logFour();
 								status = 2;
 								break;
 							case 4:
+								console.log("status 2 case 4");
 								break;
 						}
 						break;
@@ -374,7 +387,7 @@
 								stackCol.push(number, arit);
 								number = inButton;
 								display(number);
-								logFour();
+								// logFour();
 								break;
 							case 3:
 								console.log("here is status 1 case3 --------------------");
@@ -384,18 +397,19 @@
 								number = inButton;
 								display(number);
 								console.log("number :" + number);
-								logFour();
+								// logFour();
 								break;
 							default:
 								console.log("here is status 1 def --------------------");
 
 								number = number * 10 + inButton;
 								display(number);
-								logFour();
+								// logFour();
 								break;
 						}
-						logFour();
+
 						status = 1;
+						logFour();
 						break;
 				}
 			}
@@ -408,6 +422,177 @@
 				console.log(
 					"--------------------------------------------" + "\n" + "\n"
 				);
+			}
+
+			function test() {
+				// cal()のテスト
+				// 正常試験
+				calTest([1, "+", 1], 2);
+				calTest([512, "+", 340], 852);
+				calTest([123, "-", 216], -93);
+				calTest([31, "*", 6], 186);
+				calTest([123, "/", 3], 41);
+
+				// 異常試験
+				calTest([123, "/", 0], false);
+				calTest([123, "/", "+", 7], 130);
+				// 境界試験
+				calTest([-123, "+", 0], -123);
+				calTest([-123, "*", -10], 1230);
+				calTest([-123, "*", 10], -1230);
+				calTest([123, "*", -10], -1230);
+
+				// display()のテスト
+				// 正常試験
+				display(123456);
+				display("error");
+				display("123");
+
+				// 異常試験
+				//13桁以上表示（未）
+
+				// 境界試験
+				//小数点含む13桁表示（未）
+
+				// provisional()のテスト provisionalTest(proCol, number, arit,req)
+				// 正常試験
+				provisionalTest([1, "+", 2], 3, "+", 6);
+				provisionalTest([123, "-"], 216, "+", -93);
+				provisionalTest([31, "*"], 6, "+", 186);
+				provisionalTest([123, "/"], 3, "+", 41);
+				// 異常試験
+				provisionalTest([1, "/"], 0, "+", false);
+				provisionalTest([123, "/", "+", 7], 10, "+", 140);
+				// 境界試験
+				provisionalTest([-123, "+"], 0, "+", -123);
+				provisionalTest([-123, "*"], -10, "+", 1230);
+				provisionalTest([-123, "*"], 10, "+", -1230);
+				provisionalTest([123, "*"], -10, "+", -1230);
+
+				// ac()のテスト
+				// 正常試験
+				acTest();
+
+				// 異常試験 なし
+				// 境界試験 なし
+
+				// c()のテスト
+				// 正常試験
+				cTest(1);
+				cTest(2);
+				cTest(3);
+				cTest(4);
+				cTest(0);
+				cTest();
+				// 異常試験
+				cTest(0.5);
+				cTest(-1);
+				cTest(5);
+
+				// 境界試験
+
+				// dividedByZero()のテスト
+				// 正常試験
+				dividedByZeroTest(1);
+				dividedByZeroTest(2);
+				dividedByZeroTest(3);
+				dividedByZeroTest(4);
+				dividedByZeroTest(0);
+				dividedByZeroTest();
+				// 異常試験
+				dividedByZeroTest(0.5);
+				dividedByZeroTest(-1);
+				dividedByZeroTest(5);
+				// 境界試験
+
+				// pushButton()のテスト
+				// 正常試験
+				// 異常試験
+				// 境界試験
+			}
+
+			function success(str) {
+				console.log(str + " ◯◯◯◯◯◯◯◯◯◯");
+			}
+
+			function failed(str) {
+				console.log(str + " ××××××××××××");
+			}
+
+			function calTest(stack, req) {
+				console.log("====================================  calTest");
+				console.log("期待値: " + req);
+				let num;
+				try {
+					num = cal(stack);
+				} catch (e) {
+					if (req === false) {
+						success("cal: " + stack.join() + " Catched " + e);
+						return;
+					} else {
+						failed("cal: " + stack.join());
+					}
+				}
+				if (num === req) {
+					success("cal: " + stack.join() + "=" + num);
+				} else {
+					failed("cal: " + stack.join() + "=" + num);
+				}
+			}
+
+			function provisionalTest(stack, number, arit, req) {
+				console.log("====================================  provisionalTest");
+				console.log("期待値: " + req);
+				let num;
+				try {
+					num = provisional(stack, number, arit);
+				} catch (e) {
+					if (req === false) {
+						success("cal: " + stack.join() + " Catched " + e);
+						return;
+					} else {
+						failed("cal: " + stack.join());
+					}
+				}
+				if (num === req) {
+					success("cal: " + stack.join() + "=" + num);
+				} else {
+					failed("cal: " + stack.join() + "=" + num);
+				}
+			}
+
+			function acTest() {
+				console.log("====================================  acTest");
+				stackCol = [123, "/", "+", 7];
+				number = 10;
+				arit = "+";
+				status = 3;
+				logFour();
+				ac();
+				logFour();
+			}
+			function cTest(num) {
+				console.log("====================================  cTest");
+				stackCol = [123, "/", 7];
+				number = 10;
+				arit = "+";
+				status = num;
+				logFour();
+				c();
+				logFour();
+			}
+
+			function dividedByZeroTest(previousStatus) {
+				status = previousStatus;
+				console.log("previousStatus:  " + previousStatus);
+				let num = dividedByZero();
+				console.log("期待値: " + 4);
+				if (num === 4) {
+					console.log;
+					success("dividedByZero: status:" + num);
+				} else {
+					failed("dividedByZero: status:" + num);
+				}
 			}
 		</script>
 	</body>
