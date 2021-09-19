@@ -239,10 +239,7 @@
 				//表示
 				display(number);
 				//
-				console.log("stackCol:" + stackCol);
-				console.log("number:" + number);
-				console.log("arit:" + arit);
-				console.log("status:" + status);
+				logFour();
 			}
 
 			/*
@@ -324,15 +321,13 @@
 									dividedByZero();
 								}
 								arit = inButton;
-								console.log("arit:" + arit);
-								console.log("status:" + status);
+								logFour();
 								status = 2;
-								logStack();
+								logFour();
 								break;
 							case 3:
 								arit = inButton;
-								console.log("arit:" + arit);
-								console.log("status:" + status);
+								logFour();
 								status = 2;
 								break;
 							case 4:
@@ -345,9 +340,9 @@
 							stackCol.push(arit);
 						}
 						stackCol.push(number);
-						console.log("number :" + number);
+						logFour();
 						// number = 0;
-						logStack();
+						logFour();
 
 						try {
 							display(cal(stackCol));
@@ -355,13 +350,10 @@
 							// 0で除算した時の処理
 							dividedByZero();
 						}
-						console.log("status:" + status);
+
 						status = 3;
-						console.log(
-							"stackCol:" +
-								stackCol +
-								"   ===================================================="
-						);
+
+						logFour();
 						break;
 
 					// case 0:
@@ -378,38 +370,44 @@
 						switch (status) {
 							case 2:
 								console.log("here is status 1 case2 --------------------");
-								console.log("def case2");
 
 								stackCol.push(number, arit);
 								number = inButton;
 								display(number);
-								logStack();
+								logFour();
 								break;
 							case 3:
 								console.log("here is status 1 case3 --------------------");
+
 								// stackCol = [];
 								ac();
 								number = inButton;
 								display(number);
 								console.log("number :" + number);
-								logStack();
+								logFour();
 								break;
 							default:
 								console.log("here is status 1 def --------------------");
 
 								number = number * 10 + inButton;
 								display(number);
-								logStack();
+								logFour();
 								break;
 						}
-						console.log("status:" + status);
+						logFour();
 						status = 1;
 						break;
 				}
 			}
 
-			function logStack() {
+			function logFour() {
 				console.log("stackCol:" + stackCol);
+				console.log("number:" + number);
+				console.log("arit:" + arit);
+				console.log("status:" + status);
+				console.log(
+					"--------------------------------------------" + "\n" + "\n"
+				);
 			}
 		</script>
 	</body>
