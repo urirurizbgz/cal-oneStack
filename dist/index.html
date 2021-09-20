@@ -114,13 +114,12 @@
 			引数：
 			返り値：
 			*/
-			var stackCol = [];
-			let number = 0;
-			let arit = "+";
-			let status;
+			var stackCol;
+			let number, arit, status;
 			var displayElm = document.getElementById("display");
-			display(0);
+
 			logFour();
+			ac();
 
 			// テストを行うかどうかのフラグ
 			const testing = true;
@@ -258,7 +257,9 @@
 				//stackを0に
 				stackCol = [];
 				//arit,number,status,を0に
-				arit = number = status = 0;
+				arit = "+";
+				number = 0;
+				status = 1;
 				//表示
 				display(number);
 				//logFour();
@@ -338,13 +339,13 @@
 						}
 						arit = inButton; //チェック項目実質二つ
 						status = 2;
-						logFour();
+						//logFour();
 						break;
 					case 3:
 						console.log("status 2 case 3");
 						arit = inButton;
 						status = 2;
-						logFour();
+						//logFour();
 						break;
 					case 4:
 						console.log("status 2 case 4");
@@ -361,7 +362,7 @@
 			返り値：なし
 			*/
 			function pushEqual() {
-				console.log("here is status 3  --------------------");
+				console.log("here is  pushEqual status 3 --------------------");
 				if (status == 3) {
 					stackCol.push(arit);
 				}
@@ -376,7 +377,7 @@
 				}
 				status = 3;
 
-				logFour();
+				//logFour();
 			}
 
 			/*
@@ -416,6 +417,7 @@
 			}
 
 			function test() {
+				let btn;
 				// cal()のテスト
 				// 正常試験
 				calTest([1, "+", 1], 2);
@@ -447,73 +449,124 @@
 
 				// provisional()のテスト provisionalTest(proCol, number, arit,req)
 				// 正常試験
-				provisionalTest([1, "+", 2], 3, "+", 6);
-				provisionalTest([123, "-"], 216, "+", -93);
-				provisionalTest([31, "*"], 6, "+", 186);
-				provisionalTest([123, "/"], 3, "+", 41);
+				// provisionalTest([1, "+", 2], 3, "+", 6);
+				// provisionalTest([123, "-"], 216, "+", -93);
+				// provisionalTest([31, "*"], 6, "+", 186);
+				// provisionalTest([123, "/"], 3, "+", 41);
 				// 異常試験
-				provisionalTest([1, "/"], 0, "+", false);
-				provisionalTest([123, "/", "+", 7], 10, "+", 140);
+				// provisionalTest([1, "/"], 0, "+", false);
+				// provisionalTest([123, "/", "+", 7], 10, "+", 140);
 				// 境界試験
-				provisionalTest([-123, "+"], 0, "+", -123);
-				provisionalTest([-123, "*"], -10, "+", 1230);
-				provisionalTest([-123, "*"], 10, "+", -1230);
-				provisionalTest([123, "*"], -10, "+", -1230);
+				// provisionalTest([-123, "+"], 0, "+", -123);
+				// provisionalTest([-123, "*"], -10, "+", 1230);
+				// provisionalTest([-123, "*"], 10, "+", -1230);
+				// provisionalTest([123, "*"], -10, "+", -1230);
 
 				// ac()のテスト
 				// 正常試験
-				acTest([123, "/", "+", 7], 3, 10, "+");
+				// ac();
+				// status = 2;
+				// arit = "*";
+				// number = 3;
+				// stackCol = [123, "/", 3];
+				// logFour();
+				// btn = document.getElementById("ac");
+				// btn.click();
+				// logFour();
+				//acTest([123, "/", "+", 7], 3, 10, "+");
 
 				// 異常試験 なし
 				// 境界試験 なし
 
 				// c()のテスト
+				ac();
+				status = 2;
+				arit = "*";
+				number = 3;
+				stackCol = [123, "/", 3];
+				logFour();
+				btn = document.getElementById("c");
+				btn.click();
+				logFour();
 				// 正常試験
-				cTest([123, "/", 7], 1, 10, "+");
-				cTest([123, "/", 7], 2, 10, "+");
-				cTest(3);
-				cTest(4);
-				cTest(0);
-				cTest();
+				// cTest([123, "/", 7], 1, 10, "+");
+				// cTest([123, "/", 7], 2, 10, "+");
+				// cTest(3);
+				// cTest(4);
+				// cTest(0);
+				// cTest();
 				// 異常試験
-				cTest(0.5);
-				cTest(-1);
-				cTest(5);
+				// cTest(0.5);
+				// cTest(-1);
+				// cTest(5);
 
 				// 境界試験
 
 				// dividedByZero()のテスト
 				// 正常試験
-				dividedByZeroTest(1);
-				dividedByZeroTest(2);
-				dividedByZeroTest(3);
-				dividedByZeroTest(4);
-				dividedByZeroTest(0);
-				dividedByZeroTest();
+				// dividedByZeroTest(1);
+				// dividedByZeroTest(2);
+				// dividedByZeroTest(3);
+				// dividedByZeroTest(4);
+				// dividedByZeroTest(0);
+				// dividedByZeroTest();
 				// 異常試験
-				dividedByZeroTest(0.5);
-				dividedByZeroTest(-1);
-				dividedByZeroTest(5);
+				// dividedByZeroTest(0.5);
+				// dividedByZeroTest(-1);
+				// dividedByZeroTest(5);
 				// 境界試験
 
 				//pushArithmetic()のテスト
 				// 正常試験
+				// [
+				// 	["addition", "+"],
+				// 	["subtraction", "-"],
+				// 	["multiplication", "*"],
+				// 	["division", "/"],
+				// ].forEach((e) => {
+				// 	ac();
+				// 	btn = document.getElementById(e[0]);
+				// 	btn.click();
+				// 	if (arit === e[1]) {
+				// 		success("Pushed " + e[1] + " button");
+				// 	} else {
+				// 		success("Pushed " + e[1] + " button");
+				// 	}
+				// });
 				// 異常試験
 				// 境界試験
+
 				//pushEqual()のテスト
 				// 正常試験
+				// ac();
+				// logFour();
+				// btn = document.getElementById("equal");
+				// btn.click();
+				// logFour();
 				// 異常試験
-
 				// 境界試験
+
 				//pushValue()のテスト //pushValueTest(stackCol,statusNum,numberNum,aritStr,inButton)
 				// 正常試験
-
-				pushValueTest([123, "/"], 2, 5, "-", 9); //式が続く status=1,スタックにプッシュされる
-				pushValueTest([123, "/"], 3, 5, "-", 9); //別計算へ status=1,スタックが空になる,aritが0になる。numberは9になる
-				pushValueTest([123, "/"], 0, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
-				pushValueTest([123, "/"], 1, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
-				pushValueTest([123, "/"], 4, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
-				pushValueTest([123, "/"], 5, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
+				// for (let i = 1; i < 10; i++) {
+				// 	btn = document.getElementById("button" + i);
+				// 	ac();
+				// 	btn.click();
+				// 	if (number === i) {
+				// 		success("Pushed " + i + " button");
+				// 	} else {
+				// 		failed("Pushed " + i + " button");
+				// 	}
+				// }
+				// ac();
+				// let b = document.getElementById("button1");
+				// b.click();
+				// pushValueTest([123, "/"], 2, 5, "-", 9); //式が続く status=1,スタックにプッシュされる
+				// pushValueTest([123, "/"], 3, 5, "-", 9); //別計算へ status=1,スタックが空になる,aritが0になる。numberは9になる
+				// pushValueTest([123, "/"], 0, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
+				// pushValueTest([123, "/"], 1, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
+				// pushValueTest([123, "/"], 4, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
+				// pushValueTest([123, "/"], 5, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
 
 				// 異常試験
 				// 境界試験
