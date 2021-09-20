@@ -420,26 +420,26 @@
 				let btn;
 				// cal()のテスト
 				// 正常試験
-				calTest([1, "+", 1], 2);
-				calTest([512, "+", 340], 852);
-				calTest([123, "-", 216], -93);
-				calTest([31, "*", 6], 186);
-				calTest([123, "/", 3], 41);
+				// calTest([1, "+", 1], 2);
+				// calTest([512, "+", 340], 852);
+				// calTest([123, "-", 216], -93);
+				// calTest([31, "*", 6], 186);
+				// calTest([123, "/", 3], 41);
 
 				// 異常試験
-				calTest([123, "/", 0], false);
-				calTest([123, "/", "+", 7], 130);
+				// calTest([123, "/", 0], false);
+				// calTest([123, "/", "+", 7], 130);
 				// 境界試験
-				calTest([-123, "+", 0], -123);
-				calTest([-123, "*", -10], 1230);
-				calTest([-123, "*", 10], -1230);
-				calTest([123, "*", -10], -1230);
+				// calTest([-123, "+", 0], -123);
+				// calTest([-123, "*", -10], 1230);
+				// calTest([-123, "*", 10], -1230);
+				// calTest([123, "*", -10], -1230);
 
 				// display()のテスト
 				// 正常試験
-				display(123456);
-				display("error");
-				display("123");
+				// display(123456);
+				// display("error");
+				// display("123");
 
 				// 異常試験
 				//13桁以上表示（未）
@@ -479,15 +479,15 @@
 				// 境界試験 なし
 
 				// c()のテスト
-				ac();
-				status = 2;
-				arit = "*";
-				number = 3;
-				stackCol = [123, "/", 3];
-				logFour();
-				btn = document.getElementById("c");
-				btn.click();
-				logFour();
+				// ac();
+				// status = 2;
+				// arit = "*";
+				// number = 3;
+				// stackCol = [123, "/", 3];
+				// logFour();
+				// btn = document.getElementById("c");
+				// btn.click();
+				// logFour();
 				// 正常試験
 				// cTest([123, "/", 7], 1, 10, "+");
 				// cTest([123, "/", 7], 2, 10, "+");
@@ -572,221 +572,221 @@
 				// 境界試験
 			}
 
-			function success(str) {
-				console.log(str + " ◯◯◯◯◯◯◯◯◯◯");
-			}
+			// function success(str) {
+			// 	console.log(str + " ◯◯◯◯◯◯◯◯◯◯");
+			// }
 
-			function failed(str) {
-				console.log(str + " ××××××××××××");
-			}
+			// function failed(str) {
+			// 	console.log(str + " ××××××××××××");
+			// }
 
-			function calTest(stack, req) {
-				//console.log("====================================  calTest");
-				//console.log("期待値: " + req);
-				let num;
-				try {
-					num = cal(stack);
-				} catch (e) {
-					if (req === false) {
-						//success("cal: " + stack.join() + " Catched " + e);
-						return;
-					} else {
-						failed("cal: " + stack.join());
-					}
-				}
-				if (num === req) {
-					//success("cal: " + stack.join() + "=" + num);
-				} else {
-					failed("cal: " + stack.join() + "=" + num);
-				}
-			}
+			// function calTest(stack, req) {
+			// 	//console.log("====================================  calTest");
+			// 	//console.log("期待値: " + req);
+			// 	let num;
+			// 	try {
+			// 		num = cal(stack);
+			// 	} catch (e) {
+			// 		if (req === false) {
+			// 			//success("cal: " + stack.join() + " Catched " + e);
+			// 			return;
+			// 		} else {
+			// 			failed("cal: " + stack.join());
+			// 		}
+			// 	}
+			// 	if (num === req) {
+			// 		//success("cal: " + stack.join() + "=" + num);
+			// 	} else {
+			// 		failed("cal: " + stack.join() + "=" + num);
+			// 	}
+			// }
 
-			function provisionalTest(stack, number, arit, req) {
-				//console.log("====================================  provisionalTest");
-				//console.log("期待値: " + req);
-				let num;
-				try {
-					num = provisional(stack, number, arit);
-				} catch (e) {
-					if (req === false) {
-						//success("cal: " + stack.join() + " Catched " + e);
-						return;
-					} else {
-						failed(" provisionalTest: " + stack.join());
-					}
-				}
-				if (num === req) {
-					//success("cal: " + stack.join() + "=" + num);
-				} else {
-					failed(" provisionalTest: " + stack.join() + "=" + num);
-				}
-			}
+			// function provisionalTest(stack, number, arit, req) {
+			// 	//console.log("====================================  provisionalTest");
+			// 	//console.log("期待値: " + req);
+			// 	let num;
+			// 	try {
+			// 		num = provisional(stack, number, arit);
+			// 	} catch (e) {
+			// 		if (req === false) {
+			// 			//success("cal: " + stack.join() + " Catched " + e);
+			// 			return;
+			// 		} else {
+			// 			failed(" provisionalTest: " + stack.join());
+			// 		}
+			// 	}
+			// 	if (num === req) {
+			// 		//success("cal: " + stack.join() + "=" + num);
+			// 	} else {
+			// 		failed(" provisionalTest: " + stack.join() + "=" + num);
+			// 	}
+			// }
 
-			function acTest(stack, statusNum, numberNum, aritStr) {
-				//console.log("====================================  acTest");
-				status = statusNum;
-				arit = aritStr;
-				number = numberNum;
-				stackCol = stack;
-				// logFour();
-				ac();
-				// logFour();
-				if (
-					stackCol.length === 0 &&
-					arit === 0 &&
-					number === 0 &&
-					status === 0
-				) {
-					//success("acTest default");
-				} else {
-					failed("acTest");
-				}
-			}
+			// function acTest(stack, statusNum, numberNum, aritStr) {
+			// 	//console.log("====================================  acTest");
+			// 	status = statusNum;
+			// 	arit = aritStr;
+			// 	number = numberNum;
+			// 	stackCol = stack;
+			// 	// logFour();
+			// 	ac();
+			// 	// logFour();
+			// 	if (
+			// 		stackCol.length === 0 &&
+			// 		arit === 0 &&
+			// 		number === 0 &&
+			// 		status === 0
+			// 	) {
+			// 		//success("acTest default");
+			// 	} else {
+			// 		failed("acTest");
+			// 	}
+			// }
 
-			function cTest(stack, statusNum, numberNum, aritStr) {
-				//console.log("====================================  cTest");
-				status = statusNum;
-				arit = aritStr;
-				number = numberNum;
-				stackCol = stack;
-				// logFour();
-				c();
-				// logFour();
-				switch (statusNum) {
-					case 1:
-					case 2:
-						if (
-							stackCol.toString === stack.toString &&
-							arit === aritStr &&
-							number === 0 &&
-							status === 1
-						) {
-							//success("cTest case 1&2");
-						} else {
-							failed("cTest case 1&2");
-						}
-						break;
+			// function cTest(stack, statusNum, numberNum, aritStr) {
+			// 	//console.log("====================================  cTest");
+			// 	status = statusNum;
+			// 	arit = aritStr;
+			// 	number = numberNum;
+			// 	stackCol = stack;
+			// 	// logFour();
+			// 	c();
+			// 	// logFour();
+			// 	switch (statusNum) {
+			// 		case 1:
+			// 		case 2:
+			// 			if (
+			// 				stackCol.toString === stack.toString &&
+			// 				arit === aritStr &&
+			// 				number === 0 &&
+			// 				status === 1
+			// 			) {
+			// 				//success("cTest case 1&2");
+			// 			} else {
+			// 				failed("cTest case 1&2");
+			// 			}
+			// 			break;
 
-					default:
-						if (
-							stackCol.length === 0 &&
-							arit === 0 &&
-							number === 0 &&
-							status === 0
-						) {
-							//success("cTest default");
-						} else {
-							failed("cTest default");
-						}
+			// 		default:
+			// 			if (
+			// 				stackCol.length === 0 &&
+			// 				arit === 0 &&
+			// 				number === 0 &&
+			// 				status === 0
+			// 			) {
+			// 				//success("cTest default");
+			// 			} else {
+			// 				failed("cTest default");
+			// 			}
 
-						break;
-				}
-			}
+			// 			break;
+			// 	}
+			// }
 
-			function dividedByZeroTest(previousStatus) {
-				//console.log("====================================  dividedByZeroTest");
-				status = previousStatus;
-				//console.log("previousStatus:  " + previousStatus);
-				let num = dividedByZero();
-				//console.log("期待値: " + 4);
-				if (num === 4) {
-					//success("dividedByZero: status:" + num);
-				} else {
-					failed("dividedByZero: status:" + num);
-				}
-			}
+			// function dividedByZeroTest(previousStatus) {
+			// 	//console.log("====================================  dividedByZeroTest");
+			// 	status = previousStatus;
+			// 	//console.log("previousStatus:  " + previousStatus);
+			// 	let num = dividedByZero();
+			// 	//console.log("期待値: " + 4);
+			// 	if (num === 4) {
+			// 		//success("dividedByZero: status:" + num);
+			// 	} else {
+			// 		failed("dividedByZero: status:" + num);
+			// 	}
+			// }
 
-			function pushArithmeticTest(stack, statusNum, numberNum, aritStr, input) {
-				status = statusNum;
-				arit = aritStr;
-				number = numberNum;
-				stackCol = stack;
-				pushArithmetic(input);
-				switch (statusNum) {
-					case 1:
-					case 2:
-					case 3:
-						if (
-							arit === input &&
-							status === 2 &&
-							number === numberNum &&
-							stackCol.toString === stack.toString
-						) {
-							success("pushArithmetic" + statusNum);
-						} else {
-							failed("pushArithmetic" + statusNum);
-						}
-						break;
-					case 4:
-						if (
-							arit === aritStr &&
-							status === statusNum &&
-							number === numberNum &&
-							stackCol.toString === stack.toString
-						) {
-							success("pushArithmetic" + statusNum);
-						} else {
-							failed("pushArithmetic" + statusNum);
-						}
-						break;
+			// function pushArithmeticTest(stack, statusNum, numberNum, aritStr, input) {
+			// 	status = statusNum;
+			// 	arit = aritStr;
+			// 	number = numberNum;
+			// 	stackCol = stack;
+			// 	pushArithmetic(input);
+			// 	switch (statusNum) {
+			// 		case 1:
+			// 		case 2:
+			// 		case 3:
+			// 			if (
+			// 				arit === input &&
+			// 				status === 2 &&
+			// 				number === numberNum &&
+			// 				stackCol.toString === stack.toString
+			// 			) {
+			// 				success("pushArithmetic" + statusNum);
+			// 			} else {
+			// 				failed("pushArithmetic" + statusNum);
+			// 			}
+			// 			break;
+			// 		case 4:
+			// 			if (
+			// 				arit === aritStr &&
+			// 				status === statusNum &&
+			// 				number === numberNum &&
+			// 				stackCol.toString === stack.toString
+			// 			) {
+			// 				success("pushArithmetic" + statusNum);
+			// 			} else {
+			// 				failed("pushArithmetic" + statusNum);
+			// 			}
+			// 			break;
 
-					default:
-						break;
-				}
-			}
+			// 		default:
+			// 			break;
+			// 	}
+			// }
 
-			function pushValueTest(stack, statusNum, numberNum, aritStr, input) {
-				//console.log("====================================  pushValueTest");
+			// function pushValueTest(stack, statusNum, numberNum, aritStr, input) {
+			// 	//console.log("====================================  pushValueTest");
 
-				status = statusNum;
-				arit = aritStr;
-				number = numberNum;
-				stackCol = stack;
-				//console.log("status :" + status);
-				//logFour();
-				pushValue(input);
-				switch (statusNum) {
-					case 2:
-						if (
-							stackCol[stackCol.length - 2] === numberNum &&
-							stackCol[stackCol.length - 1] === aritStr &&
-							number === input &&
-							status === 1
-						) {
-							//success("pushValue case2");
-						} else {
-							failed("pushValueTest case2");
-						}
-						break;
-					case 3:
-						if (
-							stackCol.length === 0 &&
-							arit === 0 &&
-							number === input &&
-							status === 1
-						) {
-							//success("pushValue case3");
-						} else {
-							failed("pushValueTest case3");
-						}
-						break;
-					default:
-						if (
-							Math.floor((number / 10) * 1) / 1 === numberNum &&
-							number % 10 === input &&
-							arit === aritStr &&
-							status === 1 &&
-							stackCol.toString === stack.toString
-						) {
-							//success("pushValue default");
-						} else {
-							failed("pushValueTest default");
-						}
-						break;
-				}
-			}
+			// 	status = statusNum;
+			// 	arit = aritStr;
+			// 	number = numberNum;
+			// 	stackCol = stack;
+			// 	//console.log("status :" + status);
+			// 	//logFour();
+			// 	pushValue(input);
+			// 	switch (statusNum) {
+			// 		case 2:
+			// 			if (
+			// 				stackCol[stackCol.length - 2] === numberNum &&
+			// 				stackCol[stackCol.length - 1] === aritStr &&
+			// 				number === input &&
+			// 				status === 1
+			// 			) {
+			// 				//success("pushValue case2");
+			// 			} else {
+			// 				failed("pushValueTest case2");
+			// 			}
+			// 			break;
+			// 		case 3:
+			// 			if (
+			// 				stackCol.length === 0 &&
+			// 				arit === 0 &&
+			// 				number === input &&
+			// 				status === 1
+			// 			) {
+			// 				//success("pushValue case3");
+			// 			} else {
+			// 				failed("pushValueTest case3");
+			// 			}
+			// 			break;
+			// 		default:
+			// 			if (
+			// 				Math.floor((number / 10) * 1) / 1 === numberNum &&
+			// 				number % 10 === input &&
+			// 				arit === aritStr &&
+			// 				status === 1 &&
+			// 				stackCol.toString === stack.toString
+			// 			) {
+			// 				//success("pushValue default");
+			// 			} else {
+			// 				failed("pushValueTest default");
+			// 			}
+			// 			break;
+			// 	}
+			// }
 
-			function logFour() {
+			// function logFour() {
 				console.log("stackCol:" + stackCol);
 				console.log("number:" + number);
 				console.log("arit:" + arit);
