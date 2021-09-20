@@ -139,9 +139,7 @@
 			// 引数 numAndParams[Number | String]
 			// 返り値 Number
 			function cal(numAndParams) {
-				console.log(
-					"call cal ---------------=============================>>>>>>>>>>>>>>>>>>>>>>"
-				);
+				//console.log(" cal ---------------=============================");
 				let acc = 0;
 				let param = "+";
 
@@ -176,7 +174,7 @@
 					}
 				});
 
-				console.log("計算結果: " + acc);
+				//console.log("計算結果: " + acc);
 				return acc;
 				// let sort, divZ;
 
@@ -225,7 +223,7 @@
 			*/
 			function display(num) {
 				//画面表示
-				console.log("display --------------------");
+				//console.log("display --------------------");
 				displayElm.textContent = num;
 			}
 
@@ -238,12 +236,12 @@
 			返り値：なし
 			*/
 			function provisional(proCol, number, arit) {
-				console.log("provisional  --------------------");
-				console.log("proCol:" + proCol);
+				//provisional  --------------------");
+				//console.log("proCol:" + proCol);
 				proCol.push(number, arit);
 				let len = proCol.length;
 				if (len > 2) {
-					console.log("proCol:" + proCol);
+					//console.log("proCol:" + proCol);
 					display(cal(proCol));
 					return cal(proCol); //テスト用に追加
 				}
@@ -256,7 +254,7 @@
 			返り値：なし
 			*/
 			function ac() {
-				console.log("function ac   ===============//////////////////////");
+				//console.log("function ac   ===============//////////////////////");
 				//stackを0に
 				stackCol = [];
 				//arit,number,status,を0に
@@ -274,7 +272,7 @@
 			返り値：なし
 			*/
 			function c() {
-				console.log("function c   ===============//////////////////////");
+				//console.log("function c   ===============//////////////////////");
 				//cボタンが押された時の処理
 				switch (status) {
 					case 1: // statusが1、2の時 ->現在の数*10＋入力された数 の現在の数を0にする。statusは1にする。
@@ -300,9 +298,7 @@
 			*/
 			function dividedByZero() {
 				// 0で除算した時の処理
-				console.log(
-					"dividedByZero   ==================================================="
-				);
+				//console.log("dividedByZero   ====================================");
 				//エラーの文面を表示。
 				display("error");
 
@@ -394,20 +390,20 @@
 			function pushValue(inButton) {
 				switch (status) {
 					case 2:
-						console.log("here is status 1 case2 --------------------");
+						//console.log("here is status 1 case2 --------------------");
 						stackCol.push(number, arit);
 						number = inButton;
 						display(number);
 						break;
 					case 3:
-						console.log("here is status 1 case3 --------------------");
+						//console.log("here is status 1 case3 --------------------");
 
 						ac();
 						number = inButton;
 						display(number);
 						break;
 					default:
-						console.log("here is status 1 def --------------------");
+						//console.log("here is status 1 def --------------------");
 
 						number = number * 10 + inButton;
 						display(number);
@@ -465,15 +461,15 @@
 
 				// ac()のテスト
 				// 正常試験
-				acTest();
+				acTest([123, "/", "+", 7], 3, 10, "+");
 
 				// 異常試験 なし
 				// 境界試験 なし
 
 				// c()のテスト
 				// 正常試験
-				cTest(1);
-				cTest(2);
+				cTest([123, "/", 7], 1, 10, "+");
+				cTest([123, "/", 7], 2, 10, "+");
 				cTest(3);
 				cTest(4);
 				cTest(0);
@@ -531,86 +527,124 @@
 			}
 
 			function calTest(stack, req) {
-				console.log("====================================  calTest");
-				console.log("期待値: " + req);
+				//console.log("====================================  calTest");
+				//console.log("期待値: " + req);
 				let num;
 				try {
 					num = cal(stack);
 				} catch (e) {
 					if (req === false) {
-						success("cal: " + stack.join() + " Catched " + e);
+						//success("cal: " + stack.join() + " Catched " + e);
 						return;
 					} else {
 						failed("cal: " + stack.join());
 					}
 				}
 				if (num === req) {
-					success("cal: " + stack.join() + "=" + num);
+					//success("cal: " + stack.join() + "=" + num);
 				} else {
 					failed("cal: " + stack.join() + "=" + num);
 				}
 			}
 
 			function provisionalTest(stack, number, arit, req) {
-				console.log("====================================  provisionalTest");
-				console.log("期待値: " + req);
+				//console.log("====================================  provisionalTest");
+				//console.log("期待値: " + req);
 				let num;
 				try {
 					num = provisional(stack, number, arit);
 				} catch (e) {
 					if (req === false) {
-						success("cal: " + stack.join() + " Catched " + e);
+						//success("cal: " + stack.join() + " Catched " + e);
 						return;
 					} else {
-						failed("cal: " + stack.join());
+						failed(" provisionalTest: " + stack.join());
 					}
 				}
 				if (num === req) {
-					success("cal: " + stack.join() + "=" + num);
+					//success("cal: " + stack.join() + "=" + num);
 				} else {
-					failed("cal: " + stack.join() + "=" + num);
+					failed(" provisionalTest: " + stack.join() + "=" + num);
 				}
 			}
 
-			function acTest() {
-				console.log("====================================  acTest");
-				stackCol = [123, "/", "+", 7];
-				number = 10;
-				arit = "+";
-				status = 3;
-				logFour();
+			function acTest(stack, statusNum, numberNum, aritStr) {
+				//console.log("====================================  acTest");
+				status = statusNum;
+				arit = aritStr;
+				number = numberNum;
+				stackCol = stack;
+				// logFour();
 				ac();
-				logFour();
+				// logFour();
+				if (
+					stackCol.length === 0 &&
+					arit === 0 &&
+					number === 0 &&
+					status === 0
+				) {
+					//success("acTest default");
+				} else {
+					failed("acTest");
+				}
 			}
 
-			function cTest(num) {
-				console.log("====================================  cTest");
-				stackCol = [123, "/", 7];
-				number = 10;
-				arit = "+";
-				status = num;
-				logFour();
+			function cTest(stack, statusNum, numberNum, aritStr) {
+				//console.log("====================================  cTest");
+				status = statusNum;
+				arit = aritStr;
+				number = numberNum;
+				stackCol = stack;
+				// logFour();
 				c();
-				logFour();
+				// logFour();
+				switch (statusNum) {
+					case 1:
+					case 2:
+						if (
+							stackCol.toString === stack.toString &&
+							arit === aritStr &&
+							number === 0 &&
+							status === 1
+						) {
+							//success("cTest case 1&2");
+						} else {
+							failed("cTest case 1&2");
+						}
+						break;
+
+					default:
+						if (
+							stackCol.length === 0 &&
+							arit === 0 &&
+							number === 0 &&
+							status === 0
+						) {
+							//success("cTest default");
+						} else {
+							failed("cTest default");
+						}
+
+						break;
+				}
 			}
 
 			function dividedByZeroTest(previousStatus) {
-				console.log("====================================  dividedByZeroTest");
+				//console.log("====================================  dividedByZeroTest");
 				status = previousStatus;
-				console.log("previousStatus:  " + previousStatus);
+				//console.log("previousStatus:  " + previousStatus);
 				let num = dividedByZero();
-				console.log("期待値: " + 4);
+				//console.log("期待値: " + 4);
 				if (num === 4) {
-					console.log;
-					success("dividedByZero: status:" + num);
+					//success("dividedByZero: status:" + num);
 				} else {
 					failed("dividedByZero: status:" + num);
 				}
 			}
 
 			function pushValueTest(stack, statusNum, numberNum, aritStr, input) {
-				console.log("====================================  pushValueTest");
-				//要改善
+				//console.log("====================================  pushValueTest");
+
 				status = statusNum;
 				arit = aritStr;
 				number = numberNum;
@@ -626,9 +660,9 @@
 							number === input &&
 							status === 1
 						) {
-							success("pushValue case2");
+							//success("pushValue case2");
 						} else {
-							failed("pushValue case2");
+							failed("pushValueTest case2");
 						}
 						break;
 					case 3:
@@ -638,9 +672,9 @@
 							number === input &&
 							status === 1
 						) {
-							success("pushValue case3");
+							//success("pushValue case3");
 						} else {
-							failed("pushValue case3");
+							failed("pushValueTest case3");
 						}
 						break;
 					default:
@@ -651,13 +685,14 @@
 							status === 1 &&
 							stackCol.toString === stack.toString
 						) {
-							success("pushValue default");
+							//success("pushValue default");
 						} else {
-							failed("pushValue default");
+							failed("pushValueTest default");
 						}
 						break;
 				}
 			}
+
 			function logFour() {
 				console.log("stackCol:" + stackCol);
 				console.log("number:" + number);
