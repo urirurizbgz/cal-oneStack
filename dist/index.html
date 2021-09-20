@@ -415,7 +415,7 @@
 				}
 
 				status = 1;
-				logFour();
+				//logFour();
 			}
 
 			function test() {
@@ -517,6 +517,7 @@
 				pushValueTest([123, "/"], 1, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
 				pushValueTest([123, "/"], 4, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
 				pushValueTest([123, "/"], 5, 5, "-", 9); //桁あがり status=1,スタック、aritは変わらず、numberが59になる。
+
 				// 異常試験
 				// 境界試験
 			}
@@ -607,16 +608,55 @@
 				}
 			}
 
-			function pushValueTest(stack, statusNum, numberNum, aritStr, inButton) {
+			function pushValueTest(stack, statusNum, numberNum, aritStr, input) {
 				console.log("====================================  pushValueTest");
 				//要改善
 				status = statusNum;
 				arit = aritStr;
 				number = numberNum;
 				stackCol = stack;
-				console.log("status :" + status);
-				logFour();
-				pushValue(inButton);
+				//console.log("status :" + status);
+				//logFour();
+				pushValue(input);
+				switch (statusNum) {
+					case 2:
+						if (
+							stackCol[stackCol.length - 2] === numberNum &&
+							stackCol[stackCol.length - 1] === aritStr &&
+							number === input &&
+							status === 1
+						) {
+							success("pushValue case2");
+						} else {
+							failed("pushValue case2");
+						}
+						break;
+					case 3:
+						if (
+							stackCol.length === 0 &&
+							arit === 0 &&
+							number === input &&
+							status === 1
+						) {
+							success("pushValue case3");
+						} else {
+							failed("pushValue case3");
+						}
+						break;
+					default:
+						if (
+							Math.floor((number / 10) * 1) / 1 === numberNum &&
+							number % 10 === input &&
+							arit === aritStr &&
+							status === 1 &&
+							stackCol.toString === stack.toString
+						) {
+							success("pushValue default");
+						} else {
+							failed("pushValue default");
+						}
+						break;
+				}
 			}
 			function logFour() {
 				console.log("stackCol:" + stackCol);
