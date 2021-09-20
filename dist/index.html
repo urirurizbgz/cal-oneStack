@@ -33,18 +33,18 @@
 				</div>
 				<!-- 7 8 9 ÷ -->
 				<div class="flex">
-					<div onclick="pushValue(7)" id="button" class="btn justify-center">
+					<div onclick="pushValue(7)" id="button7" class="btn justify-center">
 						<p>7</p>
 					</div>
-					<div onclick="pushValue(8)" id="button" class="btn justify-center">
+					<div onclick="pushValue(8)" id="button8" class="btn justify-center">
 						<p>8</p>
 					</div>
-					<div onclick="pushValue(9)" id="button" class="btn justify-center">
+					<div onclick="pushValue(9)" id="button9" class="btn justify-center">
 						<p>9</p>
 					</div>
 					<div
 						onclick="pushArithmetic('/')"
-						id="button"
+						id="division"
 						class="btn justify-center"
 					>
 						<p>÷</p>
@@ -52,18 +52,18 @@
 				</div>
 				<!-- 4 5 6 × -->
 				<div class="flex">
-					<div onclick="pushValue(4)" id="button" class="btn justify-center">
+					<div onclick="pushValue(4)" id="button4" class="btn justify-center">
 						<p>4</p>
 					</div>
-					<div onclick="pushValue(5)" id="button" class="btn justify-center">
+					<div onclick="pushValue(5)" id="button5" class="btn justify-center">
 						<p>5</p>
 					</div>
-					<div onclick="pushValue(6)" id="button" class="btn justify-center">
+					<div onclick="pushValue(6)" id="button6" class="btn justify-center">
 						<p>6</p>
 					</div>
 					<div
 						onclick="pushArithmetic('*')"
-						id="button"
+						id="multiplication"
 						class="btn justify-center"
 					>
 						<p>×</p>
@@ -71,35 +71,35 @@
 				</div>
 				<!-- 1 2 3 - -->
 				<div class="flex">
-					<div onclick="pushValue(1)" id="button" class="btn justify-center">
+					<div onclick="pushValue(1)" id="button1" class="btn justify-center">
 						<p>1</p>
 					</div>
 
-					<div onclick="pushValue(2)" id="button" class="btn justify-center">
+					<div onclick="pushValue(2)" id="button2" class="btn justify-center">
 						<p>2</p>
 					</div>
-					<div onclick="pushValue(3)" id="button" class="btn justify-center">
+					<div onclick="pushValue(3)" id="button3" class="btn justify-center">
 						<p>3</p>
 					</div>
 					<div
 						onclick="pushArithmetic('-')"
-						id="button"
+						id="subtraction"
 						class="btn justify-center"
 					>
 						<p>-</p>
 					</div>
 				</div>
-				<!-- 0 = - -->
+				<!-- 0 = + -->
 				<div class="flex">
-					<div onclick="pushValue(0)" id="button" class="btn justify-center">
+					<div onclick="pushValue(0)" id="button0" class="btn justify-center">
 						<p>0</p>
 					</div>
-					<div onclick="pushEqual()" id="button" class="btn justify-center">
+					<div onclick="pushEqual()" id="equal" class="btn justify-center">
 						<p>=</p>
 					</div>
 					<div
 						onclick="pushArithmetic('+')"
-						id="button"
+						id="addition"
 						class="btn justify-center"
 					>
 						<p>+</p>
@@ -134,10 +134,10 @@
 			// 	console.log(e);
 			// }
 
-			// 合計値を計算する
-			// 数値と四則計算で使われる記号が交互に入った配列を受け取り、計算結果を返す
-			// 引数 numAndParams[Number | String]
-			// 返り値 Number
+			/*合計値を計算する
+			数値と四則計算で使われる記号が交互に入った配列を受け取り、計算結果を返す
+			引数 numAndParams[Number | String]
+			返り値 Number*/
 			function cal(numAndParams) {
 				//console.log(" cal ---------------=============================");
 				let acc = 0;
@@ -236,7 +236,7 @@
 			返り値：なし
 			*/
 			function provisional(proCol, number, arit) {
-				//provisional  --------------------");
+				console.log("provisional  --------------------");
 				//console.log("proCol:" + proCol);
 				proCol.push(number, arit);
 				let len = proCol.length;
@@ -298,7 +298,7 @@
 			*/
 			function dividedByZero() {
 				// 0で除算した時の処理
-				//console.log("dividedByZero   ====================================");
+				console.log("dividedByZero   ====================================");
 				//エラーの文面を表示。
 				display("error");
 
@@ -318,7 +318,7 @@
 			/*
 			やること：渡された引数を一時的に保管し、仮計算を行い、関数calがエラーを投げたらdividedByZero関数を呼ぶ。そして状態を変える。
 			詳細：
-				statusが1、2の時 -> provisional関数にstackColの複製とnumber,arit,を渡す。もし関数calがエラーを投げたら、dividedByZero関数を呼び終了。aritにinButtonを、statusに2を代入。終了。
+				statusが1、2の時 -> provisional関数にstackColの複製とnumber,arit,を渡す。aritにinButtonを、statusに2を代入。終了。もし関数calがエラーを投げたら、dividedByZero関数を呼びその時点で終了。
 				statusが3の時 -> aritにinButtonを、statusに2を代入。終了。（status1、2と統合可能？）
 				statusが4の時 ->何もしない（statusが4ではなく、デフォルトにすべきか？）
 			引数：inButton: String
@@ -336,7 +336,7 @@
 							// 0で除算した時の処理
 							dividedByZero();
 						}
-						arit = inButton;
+						arit = inButton; //チェック項目実質二つ
 						status = 2;
 						logFour();
 						break;
@@ -351,6 +351,7 @@
 						break;
 				}
 			}
+
 			/*
 			やること：配列と変数を加工し、関数calに渡す、関数calがエラーを投げたらdividedByZero関数を呼ぶ。そして状態を変える。
 			詳細：statusが3の時stackColにaritとnumberをプッシュする、それ以外の時numberのみをプッシュする。
@@ -639,6 +640,45 @@
 					//success("dividedByZero: status:" + num);
 				} else {
 					failed("dividedByZero: status:" + num);
+				}
+			}
+
+			function pushArithmeticTest(stack, statusNum, numberNum, aritStr, input) {
+				status = statusNum;
+				arit = aritStr;
+				number = numberNum;
+				stackCol = stack;
+				pushArithmetic(input);
+				switch (statusNum) {
+					case 1:
+					case 2:
+					case 3:
+						if (
+							arit === input &&
+							status === 2 &&
+							number === numberNum &&
+							stackCol.toString === stack.toString
+						) {
+							success("pushArithmetic" + statusNum);
+						} else {
+							failed("pushArithmetic" + statusNum);
+						}
+						break;
+					case 4:
+						if (
+							arit === aritStr &&
+							status === statusNum &&
+							number === numberNum &&
+							stackCol.toString === stack.toString
+						) {
+							success("pushArithmetic" + statusNum);
+						} else {
+							failed("pushArithmetic" + statusNum);
+						}
+						break;
+
+					default:
+						break;
 				}
 			}
 
